@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRH — Restaurant / Hôtel</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #17202a;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 18px;
+        }
+
+        main {
+            width: min(100% - 24px, 900px);
+            margin: auto;
+            padding: 16px 0 30px;
+        }
+
+        section {
+            background: white;
+            padding: 18px;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            min-height: 44px;
+            margin: 6px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .logout {
+            background: #374151;
+            color: white;
+        }
+
+        .item {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 14px;
+            margin: 10px 0;
+        }
+
+        .error { color: #b91c1c; }
+        .success { color: #15803d; }
+    </style>
+
+<style id="mrh-establishment-design">
+:root{
+  --mrh-dark:#08111f;
+  --mrh-dark2:#0d1b2a;
+  --mrh-teal:#14b8a6;
+  --mrh-light:#5eead4;
+  --mrh-gold:#f59e0b;
+  --mrh-white:#f8fafc;
+  --mrh-muted:#94a3b8;
+  --mrh-border:rgba(148,163,184,.18);
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(20,184,166,.16),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(245,158,11,.12),transparent 28%),
+    linear-gradient(145deg,var(--mrh-dark),var(--mrh-dark2));
+  color:var(--mrh-white);
+}
+
+body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+header,nav,.header,.navbar{
+  background:rgba(8,17,31,.82)!important;
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--mrh-border);
+}
+
+button,
+.btn,
+input[type="submit"]{
+  border:0;
+  border-radius:14px!important;
+  padding:12px 18px!important;
+  font-weight:700!important;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+button:hover,
+.btn:hover,
+input[type="submit"]:hover{
+  transform:translateY(-1px);
+}
+
+input,select,textarea{
+  width:100%;
+  box-sizing:border-box;
+  background:rgba(15,23,42,.82)!important;
+  color:var(--mrh-white)!important;
+  border:1px solid var(--mrh-border)!important;
+  border-radius:12px!important;
+  padding:12px 14px!important;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:var(--mrh-teal)!important;
+  box-shadow:0 0 0 3px rgba(20,184,166,.12);
+}
+
+.card,
+section,
+form,
+.panel,
+.box{
+  background:rgba(15,23,42,.72)!important;
+  border:1px solid var(--mrh-border)!important;
+  border-radius:20px!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.18);
+}
+
+h1,h2,h3{
+  color:var(--mrh-white);
+}
+
+a{
+  color:var(--mrh-light);
+}
+
+.mrh-est-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.mrh-est-logo{
+  width:52px;
+  height:52px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 18px rgba(20,184,166,.18));
+}
+
+.mrh-est-title{
+  font-size:1.25rem;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+
+.mrh-est-subtitle{
+  color:var(--mrh-muted);
+  font-size:.85rem;
+}
+
+.mrh-est-primary{
+  background:linear-gradient(135deg,var(--mrh-teal),#0f766e)!important;
+  color:white!important;
+}
+
+.mrh-est-gold{
+  background:linear-gradient(135deg,var(--mrh-gold),#d97706)!important;
+  color:#111827!important;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Multi Resto Hôtel</h1>
+
+    <label for="language">Langue</label>
+    <select id="language">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+        <option value="pt">Português</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="ar">العربية</option>
+        <option value="ru">Русский</option>
+        <option value="uk">Українська</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="tr">Türkçe</option>
+        <option value="ha">Hausa</option>
+        <option value="yo">Yorùbá</option>
+        <option value="ig">Igbo</option>
+        <option value="sw">Kiswahili</option>
+        <option value="fon">Fon</option>
+    </select>
+</header>
+
+<main>
+
+    <section>
+        <h2 id="requestTitle">Demande d'adhésion</h2>
+
+        <form id="requestForm">
+
+            <select id="category" required>
+                <option value="restaurant">Restaurant</option>
+                <option value="hotel">Hôtel</option>
+            </select>
+
+            <input
+                id="name"
+                placeholder="Nom de l'établissement"
+                required
+            >
+
+            <input
+                id="email"
+                type="email"
+                placeholder="Email"
+                required
+            >
+
+            <input
+                id="phone"
+                placeholder="Téléphone"
+                required
+            >
+
+            <input
+                id="latitude"
+                type="number"
+                step="any"
+                placeholder="Latitude"
+                required
+            >
+
+            <input
+                id="longitude"
+                type="number"
+                step="any"
+                placeholder="Longitude"
+                required
+            >
+
+            <textarea
+                id="description"
+                placeholder="Description de l'établissement"
+            ></textarea>
+
+            <button class="primary" type="submit">
+                Envoyer la demande
+            </button>
+
+        </form>
+
+        <p id="requestMessage"></p>
+    </section>
+
+    <section>
+        <h2 id="myEstablishmentTitle">
+            Mon établissement
+        </h2>
+
+        <div id="myEstablishment">
+            Chargement...
+        </div>
+    </section>
+
+    <section>
+        <h2 id="subscriptionTitle">
+            Abonnement
+        </h2>
+
+        <div id="subscription">
+            Chargement...
+        </div>
+
+        <button
+            class="primary"
+            onclick="createPayment('monthly')">
+            3 000 FCFA / mois
+        </button>
+
+        <button
+            class="primary"
+            onclick="createPayment('annual')">
+            36 000 FCFA / an
+        </button>
+
+        <p>
+            Le paiement réel sera connecté à FedaPay
+            lors de l'étape prévue.
+        </p>
+    </section>
+
+    <section>
+        <h2 id="notificationsTitle">
+            Notifications
+        </h2>
+
+        <div id="notifications">
+            Chargement...
+        </div>
+    </section>
+
+    <section>
+        <button
+            class="logout"
+            onclick="logout()">
+            Déconnexion
+        </button>
+
+        <p id="message"></p>
+    </section>
+
+</main>
+
+<script>
+const API = "/api";
+
+function token() {
+    return localStorage.getItem("mrh_token");
+}
+
+function headers() {
+    return {
+        "Authorization": "Bearer " + token(),
+        "Content-Type": "application/json"
+    };
+}
+
+async function api(path, options = {}) {
+
+    const response = await fetch(API + path, {
+        ...options,
+        headers: {
+            ...headers(),
+            ...(options.headers || {})
+        }
+    });
+
+    const data = await response.json();
+
+    if (response.status === 401 || response.status === 403) {
+        throw new Error(data.detail || "Accès refusé.");
+    }
+
+    if (!response.ok) {
+        throw new Error(data.detail || "Erreur serveur.");
+    }
+
+    return data;
+}
+
+function safe(value) {
+    return value === null || value === undefined
+        ? ""
+        : String(value);
+}
+
+function message(text, error = false) {
+
+    const box = document.getElementById("message");
+
+    box.textContent = text;
+    box.className = error ? "error" : "success";
+}
+
+async function submitRequest(event) {
+
+    event.preventDefault();
+
+    const data = {
+        category:
+            document.getElementById("category").value,
+
+        name:
+            document.getElementById("name").value.trim(),
+
+        email:
+            document.getElementById("email").value.trim(),
+
+        phone:
+            document.getElementById("phone").value.trim(),
+
+        latitude:
+            Number(document.getElementById("latitude").value),
+
+        longitude:
+            Number(document.getElementById("longitude").value),
+
+        description:
+            document.getElementById("description").value.trim()
+    };
+
+    try {
+
+        const result = await api(
+            "/establishments/request",
+            {
+                method: "POST",
+                body: JSON.stringify(data)
+            }
+        );
+
+        document.getElementById("requestMessage")
+            .textContent = result.message ||
+            "Demande envoyée avec succès.";
+
+        await loadAll();
+
+    } catch (error) {
+
+        document.getElementById("requestMessage")
+            .textContent = error.message;
+    }
+}
+
+async function loadEstablishment() {
+
+    const box =
+        document.getElementById("myEstablishment");
+
+    try {
+
+        const data =
+            await api("/establishments/my");
+
+        if (!data.establishment) {
+            box.innerHTML =
+                "<p>Aucune demande enregistrée.</p>";
+            return;
+        }
+
+        const e = data.establishment;
+
+        box.innerHTML = `
+            <div class="item">
+                <strong>${safe(e.name)}</strong>
+
+                <p>
+                    Type : ${safe(e.category)}
+                </p>
+
+                <p>
+                    Statut :
+                    <strong>${safe(e.status)}</strong>
+                </p>
+
+                <p>
+                    Latitude : ${safe(e.latitude)}
+                </p>
+
+                <p>
+                    Longitude : ${safe(e.longitude)}
+                </p>
+
+                <p>
+                    ${safe(e.description)}
+                </p>
+            </div>
+        `;
+
+    } catch (error) {
+
+        box.innerHTML =
+            `<p class="error">${safe(error.message)}</p>`;
+    }
+}
+
+async function loadSubscription() {
+
+    const box =
+        document.getElementById("subscription");
+
+    try {
+
+        const data =
+            await api("/establishments/my/subscription");
+
+        if (!data.subscription) {
+            box.innerHTML =
+                "<p>Aucun abonnement.</p>";
+            return;
+        }
+
+        const s = data.subscription;
+
+        box.innerHTML = `
+            <div class="item">
+                <p>
+                    Statut :
+                    <strong>${safe(s.status)}</strong>
+                </p>
+
+                <p>
+                    Plan :
+                    ${safe(s.plan)}
+                </p>
+
+                <p>
+                    Prix :
+                    ${safe(s.price_fcfa)} FCFA
+                </p>
+
+                <p>
+                    Expiration :
+                    ${safe(s.expires_at)}
+                </p>
+            </div>
+        `;
+
+    } catch (error) {
+
+        box.innerHTML =
+            `<p class="error">${safe(error.message)}</p>`;
+    }
+}
+
+async function loadNotifications() {
+
+    const box =
+        document.getElementById("notifications");
+
+    try {
+
+        const data =
+            await api("/establishments/my/notifications");
+
+        if (!data.notifications.length) {
+            box.innerHTML =
+                "<p>Aucune notification.</p>";
+            return;
+        }
+
+        box.innerHTML =
+            data.notifications.map(n => `
+                <div class="item">
+                    <strong>${safe(n.type)}</strong>
+                    <p>${safe(n.message)}</p>
+                    <small>${safe(n.created_at)}</small>
+                </div>
+            `).join("");
+
+    } catch (error) {
+
+        box.innerHTML =
+            `<p class="error">${safe(error.message)}</p>`;
+    }
+}
+
+async function createPayment(period) {
+
+    try {
+
+        const data =
+            await api("/payments/create", {
+                method: "POST",
+                body: JSON.stringify({
+                    period: period
+                })
+            });
+
+        message(
+            "Demande créée : " +
+            data.payment.reference
+        );
+
+    } catch (error) {
+
+        message(error.message, true);
+    }
+}
+
+async function changeLanguage(language) {
+
+    try {
+
+        await api(
+            "/languages/me?language=" +
+            encodeURIComponent(language),
+            {
+                method: "PUT"
+            }
+        );
+
+        document.documentElement.lang = language;
+
+    } catch (error) {
+
+        message(error.message, true);
+    }
+}
+
+async function loadAll() {
+
+    if (!token()) {
+        window.location.href = "../login.html";
+        return;
+    }
+
+    await Promise.all([
+        loadEstablishment(),
+        loadSubscription(),
+        loadNotifications()
+    ]);
+}
+
+function logout() {
+
+    localStorage.removeItem("mrh_token");
+
+    window.location.href = "../login.html";
+}
+
+document
+    .getElementById("requestForm")
+    .addEventListener(
+        "submit",
+        submitRequest
+    );
+
+document
+    .getElementById("language")
+    .addEventListener(
+        "change",
+        event => changeLanguage(event.target.value)
+    );
+
+loadAll();
+</script>
+
+
+<script id="mrh-establishment-brand-script">
+(function(){
+  const candidates = [
+    "header h1",
+    "header .brand",
+    "header .logo",
+    "nav h1",
+    "nav .brand"
+  ];
+
+  for(const selector of candidates){
+    document.querySelectorAll(selector).forEach(el=>{
+      if(el.dataset.mrhBranded) return;
+      el.dataset.mrhBranded="1";
+
+      const wrap=document.createElement("div");
+      wrap.className="mrh-est-brand";
+
+      const img=document.createElement("img");
+      img.className="mrh-est-logo";
+      img.src="../assets/mrh-logo.svg";
+      img.alt="MRH";
+
+      el.parentNode.insertBefore(wrap,el);
+      wrap.appendChild(img);
+      wrap.appendChild(el);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

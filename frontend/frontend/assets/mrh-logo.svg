@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <linearGradient id="mrhGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F766E"/>
+      <stop offset="50%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="500" rx="110" fill="#0B1320"/>
+
+  <!-- M -->
+  <path
+    d="M105 350 V155
+       C105 135 130 125 143 142
+       L250 270
+       L357 142
+       C370 125 395 135 395 155
+       V350"
+    fill="none"
+    stroke="url(#mrhGradient)"
+    stroke-width="38"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- R -->
+  <path
+    d="M170 350 V185
+       C170 165 185 150 205 150
+       H285
+       C330 150 350 180 350 215
+       C350 250 330 275 285 275
+       H170
+       M270 275 L355 350"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="24"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.95"/>
+
+  <!-- H -->
+  <path
+    d="M145 125 V375
+       M355 125 V375
+       M145 250 H355"
+    fill="none"
+    stroke="#F59E0B"
+    stroke-width="18"
+    stroke-linecap="round"
+    opacity="0.9"/>
+</svg>

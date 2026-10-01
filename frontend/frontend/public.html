@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi Resto Hôtel</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(20,184,166,.18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(245,158,11,.14), transparent 28%),
+        #08111f;
+      color: #f8fafc;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(8,17,31,.75);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .brand img {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 12px;
+    }
+
+    .nav-links a:hover {
+      background: rgba(20,184,166,.12);
+      color: #5eead4;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 85px 0 70px;
+    }
+
+    .hero-logo {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 20px 45px rgba(20,184,166,.20));
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 15px;
+      border: 1px solid rgba(20,184,166,.35);
+      border-radius: 999px;
+      color: #5eead4;
+      background: rgba(20,184,166,.08);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 76px);
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, #5eead4, #14b8a6, #fbbf24);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #94a3b8;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .actions {
+      margin-top: 34px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 24px;
+      border-radius: 15px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .btn-primary {
+      color: #06201d;
+      background: linear-gradient(135deg, #5eead4, #14b8a6);
+    }
+
+    .btn-secondary {
+      color: white;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: 45px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #94a3b8;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.065),
+        rgba(255,255,255,.025)
+      );
+      box-shadow: 0 20px 60px rgba(0,0,0,.18);
+    }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(20,184,166,.12);
+      color: #5eead4;
+      font-size: 25px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 21px;
+    }
+
+    .card p {
+      color: #94a3b8;
+      line-height: 1.65;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .price-card {
+      padding: 30px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.08);
+      text-align: center;
+    }
+
+    .price-card.highlight {
+      border-color: rgba(20,184,166,.5);
+      box-shadow: 0 0 45px rgba(20,184,166,.10);
+    }
+
+    .price {
+      font-size: 31px;
+      font-weight: 800;
+      margin: 16px 0 5px;
+    }
+
+    .price small {
+      font-size: 14px;
+      color: #94a3b8;
+      font-weight: normal;
+    }
+
+    .trial {
+      margin-top: 14px;
+      color: #5eead4;
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 35px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #64748b;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+
+      .cards,
+      .pricing {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <img src="assets/mrh-logo.svg" alt="MRH">
+      <span>Multi Resto Hôtel</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="index.html">Client</a>
+      <a href="establishment/index.html">Restaurant / Hôtel</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero container">
+
+    <img
+      class="hero-logo"
+      src="assets/mrh-logo.svg"
+      alt="Monogramme MRH"
+    >
+
+    <div class="badge">MULTI RESTO HÔTEL</div>
+
+    <h1>
+      Découvrez les meilleurs<br>
+      <span>restaurants & hôtels</span>
+    </h1>
+
+    <p>
+      Une plateforme simple pour découvrir les restaurants et hôtels,
+      consulter leur localisation et suivre facilement un itinéraire.
+    </p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="index.html">
+        Explorer les établissements
+      </a>
+
+      <a class="btn btn-secondary" href="establishment/index.html">
+        Inscrire mon établissement
+      </a>
+    </div>
+
+  </section>
+
+  <section id="services">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Tout au même endroit</h2>
+        <p>Une expérience pensée pour être simple et rapide.</p>
+      </div>
+
+      <div class="cards">
+
+        <article class="card">
+          <div class="icon">🍽️</div>
+          <h3>Restaurants</h3>
+          <p>
+            Découvrez les restaurants acceptés sur Multi Resto Hôtel
+            et consultez leurs informations.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="icon">🏨</div>
+          <h3>Hôtels</h3>
+          <p>
+            Trouvez facilement les hôtels disponibles et consultez
+            leur localisation.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="icon">📍</div>
+          <h3>Localisation</h3>
+          <p>
+            Visualisez la position d'un établissement et utilisez
+            le suivi d'itinéraire lorsque vous vous déplacez.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="tarifs">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Des tarifs simples</h2>
+        <p>Chaque type de compte possède son abonnement.</p>
+      </div>
+
+      <div class="pricing">
+
+        <div class="price-card highlight">
+          <h3>Client</h3>
+          <div class="price">
+            2 000 FCFA
+            <small>/ mois</small>
+          </div>
+          <p>24 000 FCFA / an</p>
+          <div class="trial">14 jours d'essai</div>
+        </div>
+
+        <div class="price-card">
+          <h3>Restaurant</h3>
+          <div class="price">
+            3 000 FCFA
+            <small>/ mois</small>
+          </div>
+          <p>36 000 FCFA / an</p>
+          <div class="trial">14 jours d'essai</div>
+        </div>
+
+        <div class="price-card">
+          <h3>Hôtel</h3>
+          <div class="price">
+            3 000 FCFA
+            <small>/ mois</small>
+          </div>
+          <p>36 000 FCFA / an</p>
+          <div class="trial">14 jours d'essai</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <strong>MRH</strong> — Multi Resto Hôtel
+    <br>
+    Restaurants • Hôtels • Localisation
+  </div>
+</footer>
+
+</body>
+</html>

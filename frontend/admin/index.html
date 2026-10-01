@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Resto Hôtel — PDG</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #1f2937;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 850px;
+            margin: auto;
+            padding: 18px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        }
+
+        .establishment {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 12px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 14px;
+            margin: 6px 4px 0 0;
+            cursor: pointer;
+            background: #111827;
+            color: white;
+        }
+
+        button.refuse {
+            background: #6b7280;
+        }
+
+        button.refresh {
+            width: 100%;
+        }
+
+        .status {
+            padding: 10px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .message {
+            padding: 12px;
+            background: #eef2ff;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+
+<style id="mrh-admin-design">
+:root{
+  --mrh-dark:#06101d;
+  --mrh-dark2:#0b1929;
+  --mrh-teal:#14b8a6;
+  --mrh-light:#5eead4;
+  --mrh-gold:#f59e0b;
+  --mrh-white:#f8fafc;
+  --mrh-muted:#94a3b8;
+  --mrh-border:rgba(148,163,184,.18);
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(20,184,166,.17),transparent 30%),
+    radial-gradient(circle at 88% 12%,rgba(245,158,11,.12),transparent 28%),
+    linear-gradient(145deg,var(--mrh-dark),var(--mrh-dark2));
+  color:var(--mrh-white);
+}
+
+body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+header,nav{
+  background:rgba(6,16,29,.84)!important;
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--mrh-border);
+}
+
+button,.btn,input[type="submit"]{
+  border:0;
+  border-radius:13px!important;
+  padding:11px 17px!important;
+  font-weight:750!important;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+button:hover,.btn:hover,input[type="submit"]:hover{
+  transform:translateY(-1px);
+}
+
+input,select,textarea{
+  box-sizing:border-box;
+  background:rgba(15,23,42,.86)!important;
+  color:var(--mrh-white)!important;
+  border:1px solid var(--mrh-border)!important;
+  border-radius:12px!important;
+  padding:11px 13px!important;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:var(--mrh-teal)!important;
+  box-shadow:0 0 0 3px rgba(20,184,166,.12);
+}
+
+.card,.panel,.box,section,table{
+  background:rgba(15,23,42,.70)!important;
+  border-color:var(--mrh-border)!important;
+  border-radius:18px!important;
+}
+
+h1,h2,h3{
+  color:var(--mrh-white);
+}
+
+a{
+  color:var(--mrh-light);
+}
+
+table{
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  overflow:hidden;
+}
+
+th{
+  color:var(--mrh-light)!important;
+  background:rgba(20,184,166,.08)!important;
+}
+
+td{
+  border-color:var(--mrh-border)!important;
+}
+
+.mrh-admin-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.mrh-admin-logo{
+  width:54px;
+  height:54px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 20px rgba(20,184,166,.20));
+}
+
+.mrh-admin-title{
+  font-weight:900;
+  font-size:1.25rem;
+}
+
+.mrh-admin-subtitle{
+  color:var(--mrh-muted);
+  font-size:.82rem;
+}
+
+.mrh-admin-primary{
+  background:linear-gradient(135deg,var(--mrh-teal),#0f766e)!important;
+  color:white!important;
+}
+
+.mrh-admin-gold{
+  background:linear-gradient(135deg,var(--mrh-gold),#d97706)!important;
+  color:#111827!important;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Multi Resto Hôtel</h1>
+    <p>Espace PDG / Administration</p>
+</header>
+
+<main>
+
+    <section class="card">
+        <h2>Demandes en attente</h2>
+
+        <button class="refresh" id="refresh">
+            Actualiser les demandes
+        </button>
+
+        <div id="message"></div>
+        <div id="pending">
+            Chargement...
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Fonctions d'administration</h2>
+
+        <div class="status">
+            <strong>Gestion prévue</strong>
+            <br><br>
+            • Restaurants acceptés
+            <br>
+            • Hôtels acceptés
+            <br>
+            • Utilisateurs
+            <br>
+            • Abonnements
+            <br>
+            • Suspensions / réactivations
+            <br>
+            • Notifications
+            <br>
+            • Langues
+            <br>
+            • Configuration des services
+        </div>
+    </section>
+
+    <section class="card">
+        <button id="logout">
+            Déconnexion
+        </button>
+    </section>
+
+</main>
+
+<script>
+const API = "/api";
+const token = localStorage.getItem("mrh_token");
+
+if (!token) {
+    document.body.innerHTML = `
+        <main style="padding:20px">
+            <h2>Connexion requise</h2>
+            <p>Une session PDG est nécessaire.</p>
+        </main>
+    `;
+}
+
+async function api(path, options = {}) {
+
+    const headers = options.headers || {};
+
+    headers["Content-Type"] = "application/json";
+    headers["Authorization"] = "Bearer " + token;
+
+    return fetch(API + path, {
+        ...options,
+        headers
+    });
+}
+
+function showMessage(message) {
+    document.getElementById("message").innerHTML =
+        `<div class="message">${escapeHtml(message)}</div>`;
+}
+
+async function loadPending() {
+
+    const container = document.getElementById("pending");
+
+    container.textContent = "Chargement...";
+
+    const response = await api("/admin/pending");
+
+    if (!response.ok) {
+
+        let message = "Impossible de charger les demandes.";
+
+        try {
+            const data = await response.json();
+            message = data.detail || message;
+        } catch (_) {}
+
+        container.innerHTML =
+            `<div class="status">${escapeHtml(message)}</div>`;
+
+        return;
+    }
+
+    const data = await response.json();
+
+    const establishments =
+        data.establishments ||
+        data.pending ||
+        data ||
+        [];
+
+    container.innerHTML = "";
+
+    if (!Array.isArray(establishments) ||
+        establishments.length === 0) {
+
+        container.textContent =
+            "Aucune demande en attente.";
+
+        return;
+    }
+
+    establishments.forEach(establishment => {
+
+        const div = document.createElement("div");
+
+        div.className = "establishment";
+
+        div.innerHTML = `
+            <strong>
+                ${escapeHtml(establishment.name || "")}
+            </strong>
+
+            <div class="status">
+                Type :
+                ${escapeHtml(establishment.category || "")}
+                <br>
+                Email :
+                ${escapeHtml(establishment.email || "")}
+                <br>
+                Téléphone :
+                ${escapeHtml(establishment.phone || "")}
+                <br>
+                Localisation :
+                ${escapeHtml(
+                    String(establishment.latitude ?? "")
+                )},
+                ${escapeHtml(
+                    String(establishment.longitude ?? "")
+                )}
+                <br>
+                Description :
+                ${escapeHtml(
+                    establishment.description || ""
+                )}
+                <br>
+                Statut :
+                ${escapeHtml(establishment.status || "pending")}
+            </div>
+
+            <button
+                onclick="acceptEstablishment(
+                    ${Number(establishment.id)}
+                )">
+                Accepter
+            </button>
+
+            <button
+                class="refuse"
+                onclick="refuseEstablishment(
+                    ${Number(establishment.id)}
+                )">
+                Refuser
+            </button>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+async function acceptEstablishment(id) {
+
+    const response = await api(
+        "/admin/establishments/" + id + "/accept",
+        {
+            method: "POST"
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        showMessage(
+            data.detail ||
+            "Impossible d'accepter l'établissement."
+        );
+        return;
+    }
+
+    showMessage(
+        data.message ||
+        "Établissement accepté."
+    );
+
+    loadPending();
+}
+
+async function refuseEstablishment(id) {
+
+    const response = await api(
+        "/admin/establishments/" + id + "/refuse",
+        {
+            method: "POST"
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        showMessage(
+            data.detail ||
+            "Impossible de refuser l'établissement."
+        );
+        return;
+    }
+
+    showMessage(
+        data.message ||
+        "Établissement refusé."
+    );
+
+    loadPending();
+}
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+document
+    .getElementById("refresh")
+    .addEventListener("click", loadPending);
+
+document
+    .getElementById("logout")
+    .addEventListener("click", () => {
+
+        localStorage.removeItem("mrh_token");
+        location.reload();
+    });
+
+if (token) {
+    loadPending();
+}
+</script>
+
+
+<script id="mrh-admin-brand-script">
+(function(){
+  const selectors = [
+    "header h1",
+    "header .brand",
+    "header .logo",
+    "nav h1",
+    "nav .brand"
+  ];
+
+  for(const selector of selectors){
+    document.querySelectorAll(selector).forEach(el=>{
+      if(el.dataset.mrhBranded) return;
+      el.dataset.mrhBranded="1";
+
+      const wrap=document.createElement("div");
+      wrap.className="mrh-admin-brand";
+
+      const img=document.createElement("img");
+      img.className="mrh-admin-logo";
+      img.src="../assets/mrh-logo.svg";
+      img.alt="MRH";
+
+      el.parentNode.insertBefore(wrap,el);
+      wrap.appendChild(img);
+      wrap.appendChild(el);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

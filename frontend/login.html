@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Connexion — Multi Resto Hôtel</title>
+<style>
+:root{
+  --dark:#08111f;
+  --dark2:#0d1b2a;
+  --teal:#14b8a6;
+  --light:#5eead4;
+  --gold:#f59e0b;
+  --white:#f8fafc;
+  --muted:#94a3b8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--white);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(20,184,166,.18),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(245,158,11,.13),transparent 28%),
+    linear-gradient(145deg,var(--dark),var(--dark2));
+}
+.card{
+  width:min(440px,100%);
+  padding:30px;
+  border:1px solid rgba(148,163,184,.18);
+  border-radius:24px;
+  background:rgba(15,23,42,.76);
+  backdrop-filter:blur(16px);
+  box-shadow:0 25px 70px rgba(0,0,0,.28);
+}
+.logo{
+  display:block;
+  width:82px;
+  height:82px;
+  margin:0 auto 16px;
+}
+h1{
+  text-align:center;
+  margin:0;
+  font-size:1.65rem;
+}
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  margin:8px 0 26px;
+}
+label{
+  display:block;
+  margin:15px 0 7px;
+  font-weight:700;
+}
+input,select{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.2);
+  background:#0f172a;
+  color:white;
+  font-size:16px;
+}
+button{
+  width:100%;
+  margin-top:22px;
+  padding:14px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--teal),#0f766e);
+  color:white;
+  font-weight:800;
+  font-size:16px;
+}
+button:disabled{opacity:.6}
+.msg{
+  margin-top:15px;
+  padding:11px;
+  border-radius:10px;
+  display:none;
+  background:rgba(239,68,68,.12);
+  color:#fecaca;
+}
+.links{
+  text-align:center;
+  margin-top:20px;
+}
+a{color:var(--light)}
+</style>
+</head>
+<body>
+<main class="card">
+  <img class="logo" src="assets/mrh-logo.svg" alt="MRH">
+  <h1>Multi Resto Hôtel</h1>
+  <p class="subtitle">Connexion à votre espace</p>
+
+  <form id="loginForm">
+    <label for="email">Email</label>
+    <input id="email" type="email" required autocomplete="email">
+
+    <label for="password">Mot de passe</label>
+    <input id="password" type="password" required autocomplete="current-password">
+
+    <button id="submitBtn" type="submit">Se connecter</button>
+  </form>
+
+  <div id="message" class="msg"></div>
+
+  <div class="links">
+    Pas encore de compte ?
+    <a href="register.html">Créer un compte</a>
+  </div>
+</main>
+
+<script>
+const form=document.getElementById("loginForm");
+const btn=document.getElementById("submitBtn");
+const msg=document.getElementById("message");
+
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  btn.disabled=true;
+  msg.style.display="none";
+
+  try{
+    const response=await fetch("/api/auth/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        email:document.getElementById("email").value.trim(),
+        password:document.getElementById("password").value
+      })
+    });
+
+    const data=await response.json();
+
+    if(!response.ok){
+      throw new Error(data.detail || "Connexion impossible");
+    }
+
+    localStorage.setItem("mrh_token",data.token);
+
+    const role=data.user?.role || "client";
+
+    if(role==="admin"){
+      location.href="admin/index.html";
+    }else if(role==="restaurant" || role==="hotel"){
+      location.href="establishment/index.html";
+    }else{
+      location.href="index.html";
+    }
+
+  }catch(error){
+    msg.textContent=error.message;
+    msg.style.display="block";
+  }finally{
+    btn.disabled=false;
+  }
+});
+</script>
+</body>
+</html>

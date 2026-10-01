@@ -1,0 +1,19 @@
+# Secrets / environnement
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# Logs
+*.log
+
+# OS / éditeurs
+.DS_Store
+.vscode/
+.idea/

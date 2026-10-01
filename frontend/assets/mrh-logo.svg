@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5EEAD4"/>
+      <stop offset="55%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="500" rx="105" fill="#08111F"/>
+
+  <!-- M -->
+  <path
+    d="M95 365V145
+       L250 305
+       L405 145V365"
+    fill="none"
+    stroke="url(#g)"
+    stroke-width="38"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- R -->
+  <path
+    d="M155 350V165H285
+       C330 165 350 190 350 225
+       C350 260 330 280 285 280H155
+       M270 280L360 350"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="24"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- H -->
+  <path
+    d="M135 130V370M365 130V370M135 250H365"
+    fill="none"
+    stroke="#F59E0B"
+    stroke-width="17"
+    stroke-linecap="round"
+    opacity=".95"/>
+</svg>

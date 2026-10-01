@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Multi Resto Hôtel</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #17202a;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 22px 18px;
+        }
+
+        nav {
+            max-width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        nav strong {
+            font-size: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 4px 8px;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: auto;
+            padding: 25px 14px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 55px 20px;
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 7vw, 54px);
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #4b5563;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 18px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .secondary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .prices {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin-top: 22px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <strong>Multi Resto Hôtel</strong>
+
+        <div>
+            <a href="index.html">
+                Client
+            </a>
+
+            <a href="establishment/index.html">
+                Restaurant / Hôtel
+            </a>
+
+            <a href="admin/index.html">
+                PDG
+            </a>
+        </div>
+    </nav>
+</header>
+
+<main>
+
+    <section class="hero">
+
+        <h1>
+            Multi Resto Hôtel
+        </h1>
+
+        <p>
+            Découvrez les restaurants et hôtels disponibles
+            autour de vous, consultez leurs informations
+            et suivez leur itinéraire.
+        </p>
+
+        <div class="buttons">
+
+            <a
+                class="button primary"
+                href="index.html">
+                Espace Client
+            </a>
+
+            <a
+                class="button secondary"
+                href="establishment/index.html">
+                Inscrire un Restaurant / Hôtel
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="cards">
+
+        <div class="card">
+            <h2>Restaurants</h2>
+
+            <p>
+                Découvrez les restaurants acceptés sur
+                Multi Resto Hôtel et consultez leur
+                localisation.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>Hôtels</h2>
+
+            <p>
+                Recherchez les hôtels disponibles et
+                consultez leur localisation.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>Itinéraire</h2>
+
+            <p>
+                Lancez un suivi vers un établissement.
+                Le suivi s'arrête automatiquement après
+                expiration ou manuellement.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>Multilingue</h2>
+
+            <p>
+                L'application prend en charge plusieurs
+                langues afin de faciliter son utilisation
+                dans différents pays.
+            </p>
+        </div>
+
+    </section>
+
+    <section class="prices">
+
+        <h2>Abonnements</h2>
+
+        <p>
+            <strong>Client :</strong>
+            2 000 FCFA / mois ou 24 000 FCFA / an
+        </p>
+
+        <p>
+            <strong>Restaurant :</strong>
+            3 000 FCFA / mois ou 36 000 FCFA / an
+        </p>
+
+        <p>
+            <strong>Hôtel :</strong>
+            3 000 FCFA / mois ou 36 000 FCFA / an
+        </p>
+
+        <p>
+            Les Restaurants et Hôtels disposent d'un
+            essai gratuit de 14 jours après acceptation
+            par le PDG.
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Multi Resto Hôtel
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+TRANSLATIONS = {
+    "fr": {
+        "app_name": "Multi Resto Hôtel",
+        "choose_language": "Choisir la langue",
+        "restaurants": "Restaurants",
+        "hotels": "Hôtels",
+        "login": "Connexion",
+        "register": "Créer un compte",
+        "logout": "Déconnexion",
+        "profile": "Profil",
+        "location": "Localisation",
+        "distance": "Distance",
+        "follow": "Suivre",
+        "stop_follow": "Arrêter le suivi",
+        "notifications": "Notifications",
+        "subscription": "Abonnement",
+        "monthly": "Mensuel",
+        "annual": "Annuel",
+        "renew": "Renouveler",
+        "payment": "Paiement",
+        "pending": "En attente",
+        "accepted": "Accepté",
+        "refused": "Refusé",
+        "suspended": "Suspendu",
+        "expired": "Expiré",
+        "trial": "Essai gratuit",
+        "admin": "PDG",
+    },
+
+    "en": {
+        "app_name": "Multi Resto Hôtel",
+        "choose_language": "Choose language",
+        "restaurants": "Restaurants",
+        "hotels": "Hotels",
+        "login": "Login",
+        "register": "Create account",
+        "logout": "Logout",
+        "profile": "Profile",
+        "location": "Location",
+        "distance": "Distance",
+        "follow": "Follow",
+        "stop_follow": "Stop following",
+        "notifications": "Notifications",
+        "subscription": "Subscription",
+        "monthly": "Monthly",
+        "annual": "Annual",
+        "renew": "Renew",
+        "payment": "Payment",
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "refused": "Refused",
+        "suspended": "Suspended",
+        "expired": "Expired",
+        "trial": "Free trial",
+        "admin": "Admin",
+    },
+
+    "pt": {
+        "app_name": "Multi Resto Hôtel",
+        "choose_language": "Escolher idioma",
+        "restaurants": "Restaurantes",
+        "hotels": "Hotéis",
+        "login": "Entrar",
+        "register": "Criar conta",
+        "logout": "Sair",
+        "profile": "Perfil",
+        "location": "Localização",
+        "distance": "Distância",
+        "follow": "Seguir",
+        "stop_follow": "Parar de seguir",
+        "notifications": "Notificações",
+        "subscription": "Assinatura",
+        "monthly": "Mensal",
+        "annual": "Anual",
+        "renew": "Renovar",
+        "payment": "Pagamento",
+        "pending": "Pendente",
+        "accepted": "Aceito",
+        "refused": "Recusado",
+        "suspended": "Suspenso",
+        "expired": "Expirado",
+        "trial": "Teste gratuito",
+        "admin": "Administrador",
+    },
+}
+
+
+def get_translations(language: str):
+    return TRANSLATIONS.get(language, TRANSLATIONS["fr"])
+
+
+REQUIRED_KEYS = {
+    "app_name",
+    "choose_language",
+    "restaurants",
+    "hotels",
+    "login",
+    "register",
+    "logout",
+    "profile",
+    "location",
+    "distance",
+    "follow",
+    "stop_follow",
+    "notifications",
+    "subscription",
+    "monthly",
+    "annual",
+    "renew",
+    "payment",
+    "pending",
+    "accepted",
+    "refused",
+    "suspended",
+    "expired",
+    "trial",
+    "admin",
+}
+
+
+def missing_translation_keys(language: str):
+    translations = TRANSLATIONS.get(language, {})
+    return sorted(REQUIRED_KEYS - set(translations.keys()))
+
+
+def is_translation_complete(language: str):
+    return not missing_translation_keys(language)
